@@ -1,0 +1,8 @@
+{
+  "undef": true,
+  "unused": true,
+  "mocha": true,
+  "latedef": true,
+  "node": true,
+  "esversion": 6
+}
