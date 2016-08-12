@@ -57,7 +57,7 @@ function getVendorEntryPoints(vendors) {
   if ( ! vendors) { return {}; }
   var entries = {};
   Object.keys(vendors).forEach((vendor) => {
-    entries['dll/' + vendor] = Object.keys(vendors[vendor]);
+    entries[vendor] = Object.keys(vendors[vendor]);
   });
   return entries;
 }
@@ -128,13 +128,13 @@ function getJsFilename(hashedName){
 }
 
 module.exports = function(options) {
-  var config = {
+  var config = Object.assign({
     dll: {},
     path: {},
     loaders: [],
     plugins: ['minify', 'manifest']
-  };
-  Object.assign(config, options);
+  }, options);
+  var normalizedPublicPath = path.join(config.path.public);
 
   return {
     getDllConfig: (hashedName) => {
@@ -142,8 +142,8 @@ module.exports = function(options) {
         entry: getVendorEntryPoints(config.dll),
         output: {
           filename: getJsFilename(hashedName),
-          path: config.path.dest,
-          publicPath: path.join(config.path.public),
+          path: path.join(config.path.dest, 'dll'),
+          publicPath: normalizedPublicPath,
           libraryTarget: 'var',
           library: '[name]_lib'
         },
@@ -153,14 +153,26 @@ module.exports = function(options) {
         },
         plugins: [
           new webpack.DllPlugin({
-            path: path.join(config.path.dest, '[name].json'),
+            path: path.join(config.path.dest, 'dll', '[name].json'),
             name: '[name]_lib'
           }),
           new AssetsPlugin({
-            update: true,
+            update: false,
             filename: 'manifest-entries+dll.json',
             path: config.path.dest,
-            prettyPrint: true,
+            processOutput: function (assets) {
+              var dllMainfest = {};
+              Object.keys(assets).forEach((key) => {
+                dllMainfest[path.join('dll', key)] = {
+                  js: path.join(
+                    normalizedPublicPath,
+                    'dll',
+                    assets[key].js.replace(normalizedPublicPath, '')
+                  )
+                }
+              });
+              return JSON.stringify(dllMainfest, null, 2);
+            }
           })
         ]
       };
@@ -177,7 +189,7 @@ module.exports = function(options) {
         output: {
           filename: getJsFilename(o.hashedName),
           path: config.path.dest,
-          publicPath: path.join(config.path.public),
+          publicPath: normalizedPublicPath,
         },
         resolve: {
           extensions: config.extensions,
@@ -190,7 +202,7 @@ module.exports = function(options) {
       return config.path.dest;
     },
     getPublicPrefix: () => {
-      return path.join(config.path.public);
+      return normalizedPublicPath;
     },
     getDevConfig: () => {
       return Object.assign({
