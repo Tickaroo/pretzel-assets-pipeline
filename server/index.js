@@ -2,14 +2,14 @@ var express = require('express');
 var webpackAssetsMiddleware = require('./webpack.js');
 var filesAssetsMiddleware = require('./files.js');
 var sassAssetsMiddleware = require('./sass.js');
+var cors = require('cors');
 
 module.exports = function(config) {
   var app = express();
   var devConfig = config.getDevConfig();
 
-  // webpack
-  var webpackConfig = config.getEntryConfig({sourceMap: devConfig.sourceMap});
-  app.use(webpackAssetsMiddleware(webpackConfig));
+  // allow cross-domain requests
+  app.use(cors());
 
   // sass
   var sassConfig = config.getSassConfig();
@@ -22,5 +22,9 @@ module.exports = function(config) {
     app.use(filesAssetsMiddleware(fileDirecories));
   }
 
-  app.listen(devConfig.port, () => console.log('prezel-assets-pipeline development server running on port: ' + devConfig.port));
+  // webpack
+  var webpackConfig = config.getEntryConfig({sourceMap: devConfig.sourceMap});
+  app.use(webpackAssetsMiddleware(webpackConfig));
+
+  app.listen(devConfig.port, () => console.log('pretzel-assets-pipeline development server running on port: ' + devConfig.port));
 };
