@@ -149,7 +149,7 @@ module.exports = function(grunt, config) {
         },
         expand: true,
         cwd: sassConfig.src,
-        src: '**/*',
+        src: path.join('**', '*.{sass,scss}'),
         dest: stylesheetsTempDir,
         ext: '.css'
       }

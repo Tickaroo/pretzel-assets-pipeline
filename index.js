@@ -10,10 +10,13 @@ function allFiles(dir, extension) {
 }
 
 function getEntryPoints(src) {
+  var entriesDirPath = path.join(src, 'entries');
   var entries = {};
-  var buildEntries = function(kind) {
+  var buildEntries = function(dirPath, kind) {
     return function(filename) {
-      var name = path.basename(filename);
+      var file = fs.statSync(filename);
+      if (file.isDirectory()) { return; }
+      var name = filename.replace(dirPath, '');
       var extension = path.extname(name);
       var chunkName = name;
       if (extension) {
@@ -26,8 +29,9 @@ function getEntryPoints(src) {
   };
 
   if (src) {
-    //glob.sync(allFiles(path.join(src, 'stylesheets'))).forEach(buildEntries('stylesheets/'));
-    glob.sync(allFiles(path.join(src, 'entries'))).forEach(buildEntries('entries/'));
+    // glob.sync(allFiles(path.join(src, 'stylesheets'))).forEach(buildEntries(path.join(src, 'stylesheets'), 'stylesheets/'));
+    // might be useful to compile css with webpack
+    glob.sync(allFiles(entriesDirPath)).forEach(buildEntries(entriesDirPath, 'entries'));
   }
   debug(entries);
   return entries;
