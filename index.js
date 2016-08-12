@@ -169,7 +169,7 @@ module.exports = function(options) {
                     'dll',
                     assets[key].js.replace(normalizedPublicPath, '')
                   )
-                }
+                };
               });
               return JSON.stringify(dllMainfest, null, 2);
             }
