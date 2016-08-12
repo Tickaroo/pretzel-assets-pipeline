@@ -153,7 +153,9 @@ grunt.config.merge(pretzelConfig.getGruntConfig());
 │   │   │   ├── app_b-DIGEST.js.map
 │   │   ├── stylesheets/
 │   │   │   ├── style_a-DIGEST.css
+│   │   │   ├── style_a-DIGEST.css.map
 │   │   │   ├── style_b-DIGEST.css
+│   │   │   ├── style_b-DIGEST.css.map
 ```
 
 ## What is DLL and why to use it

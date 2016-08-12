@@ -101,7 +101,7 @@ module.exports = function(grunt, config) {
       'pretzel-css-temp': {
         expand: true,
         cwd: stylesheetsTempDir,
-        src: '**/*',
+        src: '**/*.css',
         dest: stylesheetsDir
       },
       'pretzel-files': {
@@ -144,7 +144,7 @@ module.exports = function(grunt, config) {
     sass: {
       pretzel: {
         options: {
-          sourceMap: false,
+          sourceMap: true,
           outputStyle: 'compressed'
         },
         expand: true,

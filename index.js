@@ -209,8 +209,13 @@ module.exports = function(options) {
         port: 4010
       }, config.dev);
     },
-    getSassConfig: () => {
+    getSassConfig: (o) => {
+      o = o || {};
+      var hasSourceMap = !!o.sourceMap;
       return {
+        sourceMap: hasSourceMap,
+        sourceMapEmbed: hasSourceMap,
+        sourceMapContents: hasSourceMap,
         src: path.join(config.path.src, 'stylesheets'),
         dest: path.join(config.path.dest, 'stylesheets'),
         prefix: path.join(config.path.public, 'stylesheets'),

@@ -12,7 +12,7 @@ module.exports = function(config) {
   app.use(cors());
 
   // sass
-  var sassConfig = config.getSassConfig();
+  var sassConfig = config.getSassConfig(devConfig);
   app.use(sassAssetsMiddleware(sassConfig));
   app.use(sassConfig.prefix, express.static(sassConfig.dest));
 
@@ -23,7 +23,7 @@ module.exports = function(config) {
   }
 
   // webpack
-  var webpackConfig = config.getEntryConfig({sourceMap: devConfig.sourceMap});
+  var webpackConfig = config.getEntryConfig(devConfig);
   app.use(webpackAssetsMiddleware(webpackConfig));
 
   app.listen(devConfig.port, () => console.log('pretzel-assets-pipeline development server running on port: ' + devConfig.port));
