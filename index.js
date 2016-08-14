@@ -134,6 +134,13 @@ module.exports = function(options) {
     loaders: [],
     plugins: ['minify', 'manifest']
   }, options);
+  config.dev = Object.assign({
+    port: 4010,
+    noLog: true,
+    lazy: true,
+    sourceMap: 'cheap-module-source-map',
+  }, options.dev);
+
   var normalizedPublicPath = path.join(config.path.public);
 
   return {
@@ -198,6 +205,31 @@ module.exports = function(options) {
         plugins: getPlugins(config, o.shouldMinify, o.manifestData),
       };
     },
+    getDevEntryConfig: (entriesConfig) => {
+      var devConfigs = Object.keys(entriesConfig.entry).map((entry) => {
+        var newEntry = {};
+        newEntry[entry] = entriesConfig.entry[entry];
+        return {
+          compiler: Object.assign({}, entriesConfig, {entry: newEntry})
+        };
+      });
+      devConfigs.forEach((devConfig) => {
+        var firstAndOnlyEntryPath = Object.keys(devConfig.compiler.entry)[0];
+        devConfig.server = {
+          publicPath: entriesConfig.output.publicPath,
+          lazy: config.dev.lazy,
+          noInfo: config.dev.noLog,
+          filename: new RegExp(firstAndOnlyEntryPath),
+          stats: {
+            hash: false,
+            cached: false,
+            cachedAssets: false,
+            colors: true
+          }
+        };
+      });
+      return devConfigs;
+    },
     getDestinationDirectory: () => {
       return config.path.dest;
     },
@@ -205,9 +237,7 @@ module.exports = function(options) {
       return normalizedPublicPath;
     },
     getDevConfig: () => {
-      return Object.assign({
-        port: 4010
-      }, config.dev);
+      return config.dev;
     },
     getSassConfig: (o) => {
       o = o || {};
@@ -220,6 +250,7 @@ module.exports = function(options) {
         dest: path.join(config.path.dest, 'stylesheets'),
         prefix: path.join(config.path.public, 'stylesheets'),
         indentedSyntax: true,
+        noLog: config.dev.noLog,
       };
     },
     getFileDirecories: () => {

@@ -23,7 +23,7 @@ module.exports = function(config) {
   }
 
   // webpack
-  var webpackConfig = config.getEntryConfig(devConfig);
+  var webpackConfig = config.getDevEntryConfig(config.getEntryConfig(devConfig));
   app.use(webpackAssetsMiddleware(webpackConfig));
 
   app.listen(devConfig.port, () => console.log('pretzel-assets-pipeline development server running on port: ' + devConfig.port));

@@ -7,7 +7,7 @@ Isomorphic asset pipeline for **Pretzel** apps, it uses **webpack**, **node-sass
 The goals are:
 
 - One simple configuration file across development, staging and production environments
-- Fast build times in development and CI environment.
+- Fast build times in development and CI environment (with "true" lazy loading for webpack entries).
 - Being able to require templates, stylesheets, images or other static files from other modules, on Node.js and in client-side code.
 
 ## Install
@@ -44,7 +44,9 @@ Available options:
 
 #### `dev` (optional)  
 - `port` (default: `4010`) set port for assets dev server.
-- `sourceMap` (default: `undefined`) set type of javascript source maps ([Available options](https://webpack.github.io/docs/configuration.html#devtool)).
+- `noLog` (default: `true`) `true` will hide compiler logs, but still show errors traces.
+- `lazy` (default: `true`) `true` compiles entries on http request, `false` precompiles all entries to memory on startup.
+- `sourceMap` (default: `'cheap-module-source-map'`) set type of javascript source maps ([Available options](https://webpack.github.io/docs/configuration.html#devtool)).
 
 
 ### Example
