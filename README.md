@@ -131,9 +131,8 @@ It is not possible to have access to `serverAssets` in browser.
 
 ```javascript
 var filePath = require('pretzel-assets-pipeline/helper/file-path');
-var assetsPathConfig = require('./assets/pretzel_config.js').getPathConfig();
 
-window.files = filePath(MANIFEST_FILES, assetsPathConfig);
+window.files = filePath(MANIFEST_FILES, {port: 4010, public: '/build/'});
 
 // …
 
