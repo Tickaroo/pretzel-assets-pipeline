@@ -124,7 +124,7 @@ function getPlugins(config, shouldMinify, manifestData){
 }
 
 function getJsFilename(hashedName){
-  return hashedName ? '[name]-[hash:6].js': '[name].js';
+  return hashedName ? '[name]-[hash:8].js': '[name].js';
 }
 
 module.exports = function(options) {
