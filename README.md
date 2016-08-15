@@ -101,6 +101,60 @@ grunt.initConfig({
 grunt.config.merge(pretzelConfig.getGruntConfig());
 ```
 
+## `node-app.js` example
+
+```javascript
+var express = require('express');
+
+var app = module.exports = express();
+
+var assetsPathConfig = require('./assets/pretzel_config.js').getPathConfig();
+
+var manifests = {};
+if (process.env.NODE_ENV !== 'development') {
+  manifests.files = require('./public/build/manifest-files.json');
+  manifests.entriesAndDll = require('./public/build/manifest-entries+dll.json');
+  manifests.stylesheets = require('./public/build/manifest-stylesheets.json');
+}
+app.locals.assets = require('pretzel-assets-pipeline/helper/asset-path')(manifests.files, assetsPathConfig);
+app.locals.serverAssets = require('pretzel-assets-pipeline/helper/server-asset-path')(manifests.entriesAndDll, manifests.stylesheets, assetsPathConfig);
+
+app.use(express.static('./public/'));
+
+// …
+
+```
+
+## `browser-app.js` example
+
+It is not possible to have access to `serverAssets` in browser.
+
+```javascript
+var filePath = require('pretzel-assets-pipeline/helper/file-path');
+var assetsPathConfig = require('./assets/pretzel_config.js').getPathConfig();
+
+window.files = filePath(MANIFEST_FILES, assetsPathConfig);
+
+// …
+
+```
+
+## `template.pug` example
+
+```pug
+html
+  head
+    link(href=serverAssets.css('test') media="all" rel="stylesheet")
+    script(src=serverAssets.dll('vendor'))
+    script(src=serverAssets.js('app'))
+
+  body
+    img(src=assets.image('test.jpg'))
+    a(href=assets.file('test.txt'))
+```
+
+
+
 ## Useful `scripts`
 
 ```javascript

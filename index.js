@@ -239,6 +239,12 @@ module.exports = function(options) {
     getDevConfig: () => {
       return config.dev;
     },
+    getPathConfig: () => {
+      return {
+        public: normalizedPublicPath,
+        port: config.dev.port
+      };
+    },
     getSassConfig: (o) => {
       o = o || {};
       var hasSourceMap = !!o.sourceMap;
