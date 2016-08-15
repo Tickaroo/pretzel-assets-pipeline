@@ -1,6 +1,6 @@
 {
   "name": "pretzel-assets-pipeline",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Isomorphic asset pipeline for Pretzel apps",
   "main": "index.js",
   "license": "MIT",
