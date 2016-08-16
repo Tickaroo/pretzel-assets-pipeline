@@ -130,9 +130,9 @@ app.use(express.static('./public/'));
 It is not possible to have access to `serverAssets` in browser.
 
 ```javascript
-var filePath = require('pretzel-assets-pipeline/helper/file-path');
+var assetPath = require('pretzel-assets-pipeline/helper/asset-path');
 
-window.files = filePath(MANIFEST_FILES, {port: 4010, public: '/build/'});
+window.assets = assetPath(MANIFEST_FILES, {port: 4010});
 
 // …
 
