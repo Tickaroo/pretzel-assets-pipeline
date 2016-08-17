@@ -221,4 +221,5 @@ Read about [webpack's DLL in this blog post](https://robertknight.github.io/post
 ## Gotchas
 
 ### `pug`
-Make sure to set `app.locals.basedir = __dirname;` in your express app and `loader: 'pug?root=' + path.resolve(__dirname, '../')` in your `pretzel_config.js` to be able to use `include /node_modules/module_a/template_a`.
+- Make sure to set `app.locals.basedir = __dirname;` in your express app and `loader: 'pug?root=' + path.resolve(__dirname, '../')` in your `pretzel_config.js` to be able to use `include /node_modules/module_a/template_a`.
+- You can not have multiple `public/` directories or files with the same name.
