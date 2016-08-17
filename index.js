@@ -164,18 +164,30 @@ module.exports = function(options) {
             name: '[name]_lib'
           }),
           new AssetsPlugin({
-            update: false,
+            update: true,
             filename: 'manifest-entries+dll.json',
             path: config.path.dest,
             processOutput: function (assets) {
               var dllMainfest = {};
               Object.keys(assets).forEach((key) => {
-                dllMainfest[path.join('dll', key)] = {
-                  js: path.join(
+                var dllKey, dllValue;
+                if (key.substr(0, 4) === 'dll/') {
+                  dllKey = key;
+                  dllValue = path.join(
+                    normalizedPublicPath,
+                    assets[key].js.replace(normalizedPublicPath, '')
+                  );
+                }
+                else {
+                  dllKey = path.join('dll', key);
+                  dllValue = path.join(
                     normalizedPublicPath,
                     'dll',
                     assets[key].js.replace(normalizedPublicPath, '')
-                  )
+                  );
+                }
+                dllMainfest[dllKey] = {
+                  js: dllValue
                 };
               });
               return JSON.stringify(dllMainfest, null, 2);
