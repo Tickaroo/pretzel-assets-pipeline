@@ -43,7 +43,7 @@ module.exports = function(grunt, config) {
     grunt.config.merge({
       webpack: {
         'pretzel-entries': config.getEntryConfig({
-          sourceMap: grunt.option('sourceMap') || 'cheap-module-source-map',
+          sourceMap: grunt.option('sourceMap') || 'source-map',
           hashedName: true,
           shouldMinify: true,
           manifestData: grunt.file.read(manifestFilesPath)
@@ -139,6 +139,9 @@ module.exports = function(grunt, config) {
       },
     },
     webpack: {
+      options: {
+        progress: !!grunt.option('progress')
+      },
       'pretzel-dll': config.getDllConfig(grunt.option('hashedName'))
     },
     sass: {

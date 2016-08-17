@@ -87,6 +87,9 @@ function getPlugins(config, shouldMinify, manifestData){
   if (shouldMinify && config.plugins.indexOf('minify') !== -1) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
       minimize: true,
+      compress: {
+        warnings: false
+      },
       output: {
         comments: false
       },
