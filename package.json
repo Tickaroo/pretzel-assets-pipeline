@@ -1,6 +1,6 @@
 {
   "name": "pretzel-assets-pipeline",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Isomorphic asset pipeline for Pretzel apps",
   "license": "MIT",
   "author": "Anton Pawlik <anton.pawlik@gmail.com> (http://antpaw.org)",
