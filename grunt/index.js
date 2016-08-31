@@ -142,7 +142,7 @@ module.exports = function(grunt, config) {
       options: {
         progress: !!grunt.option('progress')
       },
-      'pretzel-dll': config.getDllConfig(grunt.option('hashedName'))
+      'pretzel-dll': config.getDllConfig({hashedName: grunt.option('hashedName')})
     },
     sass: {
       pretzel: {
