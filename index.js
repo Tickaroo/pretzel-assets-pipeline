@@ -74,7 +74,19 @@ function mergedVendorMoudle(vendors) {
   return merged;
 }
 
-function getPlugins(config, shouldMinify, manifestData){
+function getMinifyPlugin() {
+  return new webpack.optimize.UglifyJsPlugin({
+    minimize: true,
+    compress: {
+      warnings: false
+    },
+    output: {
+      comments: false
+    },
+  });
+}
+
+function getPlugins(config, shouldMinify, manifestData) {
   var plugins = [];
 
   /*
@@ -85,15 +97,7 @@ function getPlugins(config, shouldMinify, manifestData){
   */
 
   if (shouldMinify && config.plugins.indexOf('minify') !== -1) {
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      },
-    }));
+    plugins.push(getMinifyPlugin());
   }
 
   if (manifestData && config.plugins.indexOf('manifest') !== -1) {
@@ -127,7 +131,7 @@ function getPlugins(config, shouldMinify, manifestData){
 }
 
 function getJsFilename(hashedName){
-  return hashedName ? '[name]-[chunkhash:8].js': '[name].js';
+  return hashedName ? '[name]-[chunkhash:8].js' : '[name].js';
 }
 
 module.exports = function(options) {
@@ -147,11 +151,13 @@ module.exports = function(options) {
   var normalizedPublicPath = path.join(config.path.public);
 
   return {
-    getDllConfig: (hashedName) => {
+    getDllConfig: (o) => {
+      o = o || {};
       return {
+        devtool: 'source-map',
         entry: getVendorEntryPoints(config.dll),
         output: {
-          filename: getJsFilename(hashedName),
+          filename: getJsFilename(o.hashedName),
           path: path.join(config.path.dest, 'dll'),
           publicPath: normalizedPublicPath,
           libraryTarget: 'var',
@@ -162,6 +168,7 @@ module.exports = function(options) {
           alias: mergedVendorMoudle(config.dll),
         },
         plugins: [
+          getMinifyPlugin(),
           new webpack.DllPlugin({
             path: path.join(config.path.dest, 'dll', '[name].json'),
             name: '[name]_lib'

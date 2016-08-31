@@ -198,8 +198,10 @@ html
 │   │   │   ├── stuff-DIGEST.txt
 │   │   ├── dll/
 │   │   │   ├── chart_js-DIGEST.js
+│   │   │   ├── chart_js-DIGEST.js.map
 │   │   │   ├── chart_js.json
 │   │   │   ├── vendor-DIGEST.js
+│   │   │   ├── vendor-DIGEST.js.map
 │   │   │   ├── vendor.json
 │   │   ├── entries/
 │   │   │   ├── app_a-DIGEST.js
