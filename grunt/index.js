@@ -4,6 +4,7 @@ module.exports = function(grunt, config) {
 
   var files = null;
   var mainDest = config.getDestinationDirectory();
+  var digestLength = config.getDigestLength();
   var manifestFilesPath = path.join(mainDest, 'manifest-files.json');
   var manifestCssPath = path.join(mainDest, 'manifest-stylesheets.json');
   var sassConfig = config.getSassConfig();
@@ -96,7 +97,7 @@ module.exports = function(grunt, config) {
       options: {
         algorithm: 'md5',
         summary: 'foo',
-        length: 8
+        length: digestLength
       },
       'pretzel-css-temp': {
         expand: true,

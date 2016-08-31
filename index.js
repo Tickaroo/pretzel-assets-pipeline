@@ -130,12 +130,18 @@ function getPlugins(config, shouldMinify, manifestData) {
   return plugins;
 }
 
-function getJsFilename(hashedName){
-  return hashedName ? '[name]-[chunkhash:8].js' : '[name].js';
+function getJsFilename(hashedName, digestLength){
+  if (hashedName) {
+    return '[name].[chunkhash:' + digestLength + '].js';
+  }
+  else {
+    return '[name].js';
+  }
 }
 
 module.exports = function(options) {
   var config = Object.assign({
+    digestLength: 8,
     dll: {},
     path: {},
     loaders: [],
@@ -157,7 +163,7 @@ module.exports = function(options) {
         devtool: 'source-map',
         entry: getVendorEntryPoints(config.dll),
         output: {
-          filename: getJsFilename(o.hashedName),
+          filename: getJsFilename(o.hashedName, config.digestLength),
           path: path.join(config.path.dest, 'dll'),
           publicPath: normalizedPublicPath,
           libraryTarget: 'var',
@@ -216,7 +222,7 @@ module.exports = function(options) {
         context: config.path.src,
         entry: getEntryPoints(config.path.src, 'entries'),
         output: {
-          filename: getJsFilename(o.hashedName),
+          filename: getJsFilename(o.hashedName, config.digestLength),
           path: config.path.dest,
           publicPath: normalizedPublicPath,
         },
@@ -251,6 +257,9 @@ module.exports = function(options) {
         };
       });
       return devConfigs;
+    },
+    getDigestLength: () => {
+      return config.digestLength;
     },
     getDestinationDirectory: () => {
       return config.path.dest;

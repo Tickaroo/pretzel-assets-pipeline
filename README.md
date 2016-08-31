@@ -195,24 +195,24 @@ html
 │   │   ├── manifest-stylesheets.json
 │   │   ├── manifest-files.json
 │   │   ├── files/
-│   │   │   ├── stuff-DIGEST.txt
+│   │   │   ├── stuff.DIGEST.txt
 │   │   ├── dll/
-│   │   │   ├── chart_js-DIGEST.js
-│   │   │   ├── chart_js-DIGEST.js.map
+│   │   │   ├── chart_js.DIGEST.js
+│   │   │   ├── chart_js.DIGEST.js.map
 │   │   │   ├── chart_js.json
-│   │   │   ├── vendor-DIGEST.js
-│   │   │   ├── vendor-DIGEST.js.map
+│   │   │   ├── vendor.DIGEST.js
+│   │   │   ├── vendor.DIGEST.js.map
 │   │   │   ├── vendor.json
 │   │   ├── entries/
-│   │   │   ├── app_a-DIGEST.js
-│   │   │   ├── app_a-DIGEST.js.map
-│   │   │   ├── app_b-DIGEST.js
-│   │   │   ├── app_b-DIGEST.js.map
+│   │   │   ├── app_a.DIGEST.js
+│   │   │   ├── app_a.DIGEST.js.map
+│   │   │   ├── app_b.DIGEST.js
+│   │   │   ├── app_b.DIGEST.js.map
 │   │   ├── stylesheets/
-│   │   │   ├── style_a-DIGEST.css
-│   │   │   ├── style_a-DIGEST.css.map
-│   │   │   ├── style_b-DIGEST.css
-│   │   │   ├── style_b-DIGEST.css.map
+│   │   │   ├── style_a.DIGEST.css
+│   │   │   ├── style_a.DIGEST.css.map
+│   │   │   ├── style_b.DIGEST.css
+│   │   │   ├── style_b.DIGEST.css.map
 ```
 
 ## What is DLL and why to use it

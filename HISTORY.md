@@ -1,3 +1,8 @@
+## 0.2.2 / 2016-08-31
+
+- `digestLength` option added
+- changed `-` to `.` in javascript digested filenames
+
 ## 0.2.1 / 2016-08-31
 
 - Hotfixed `grunt/index`
