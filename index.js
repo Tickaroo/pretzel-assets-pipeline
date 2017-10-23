@@ -76,10 +76,8 @@ function mergedVendorMoudle(vendors) {
 
 function getMinifyPlugin() {
   return new webpack.optimize.UglifyJsPlugin({
+    sourceMap: true,
     minimize: true,
-    compress: {
-      warnings: false
-    },
     output: {
       comments: false
     },
@@ -167,7 +165,7 @@ module.exports = function(options) {
           path: path.join(config.path.dest, 'dll'),
           publicPath: normalizedPublicPath,
           libraryTarget: 'var',
-          library: '[name]_lib'
+          library: '[name]_lib',
         },
         resolve: {
           extensions: config.extensions,
@@ -177,7 +175,7 @@ module.exports = function(options) {
           getMinifyPlugin(),
           new webpack.DllPlugin({
             path: path.join(config.path.dest, 'dll', '[name].json'),
-            name: '[name]_lib'
+            name: '[name]_lib',
           }),
           new AssetsPlugin({
             update: true,
@@ -203,7 +201,7 @@ module.exports = function(options) {
                   );
                 }
                 dllMainfest[dllKey] = {
-                  js: dllValue
+                  js: dllValue,
                 };
               });
               return JSON.stringify(dllMainfest, null, 2);
@@ -217,7 +215,7 @@ module.exports = function(options) {
       return {
         devtool: o.sourceMap,
         module: {
-          loaders: config.loaders,
+          rules: config.loaders,
         },
         context: config.path.src,
         entry: getEntryPoints(config.path.src, 'entries'),
@@ -227,8 +225,9 @@ module.exports = function(options) {
           publicPath: normalizedPublicPath,
         },
         resolve: {
+          symlinks: false,
           extensions: config.extensions,
-          alias: mergedVendorMoudle(config.dll)
+          alias: mergedVendorMoudle(config.dll),
         },
         plugins: getPlugins(config, o.shouldMinify, o.manifestData),
       };
@@ -252,8 +251,8 @@ module.exports = function(options) {
             hash: false,
             cached: false,
             cachedAssets: false,
-            colors: true
-          }
+            colors: true,
+          },
         };
       });
       return devConfigs;
@@ -292,6 +291,6 @@ module.exports = function(options) {
     },
     getFileDirecories: () => {
       return getPublicDirecories(config.publicFileDirecories);
-    }
+    },
   };
 };
