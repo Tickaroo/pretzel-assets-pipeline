@@ -1,3 +1,7 @@
+## 0.3.0 / 2017-10-25
+
+- **BREAKING** webpack update to `^3.8.1`. (Update your loaders)
+
 ## 0.2.2 / 2016-08-31
 
 - `digestLength` option added
