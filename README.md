@@ -33,7 +33,7 @@ This will search for `public/` directories inside this directories and make all 
 First level keys define the names of the DLL libs. Second level keys define the modules names that will go into the DLL lib. Second level value defines the path to that lib or the module name.
 
 #### `loaders` (optional)  
-[Same as webpack loaders](https://webpack.github.io/docs/using-loaders.html).
+[Same as webpack loaders](https://webpack.js.org/concepts/loaders/).
 
 #### `plugins` (optional)  
 (default: `['minify', 'manifest']`). List of plugins used in webpack.  
@@ -46,7 +46,7 @@ Available options:
 - `port` (default: `4010`) set port for assets dev server.
 - `noLog` (default: `true`) `true` will hide compiler logs, but still show errors traces.
 - `lazy` (default: `true`) `true` compiles entries on http request, `false` precompiles all entries to memory on startup.
-- `sourceMap` (default: `'cheap-module-source-map'`) set type of javascript source maps ([Available options](https://webpack.github.io/docs/configuration.html#devtool)).
+- `sourceMap` (default: `'cheap-module-source-map'`) set type of javascript source maps ([Available options](https://webpack.js.org/configuration/)).
 
 
 ### Example
