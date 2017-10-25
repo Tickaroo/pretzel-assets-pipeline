@@ -79,7 +79,7 @@ function getMinifyPlugin() {
     sourceMap: true,
     minimize: true,
     output: {
-      comments: false
+      comments: false,
     },
   });
 }
@@ -206,8 +206,8 @@ module.exports = function(options) {
               });
               return JSON.stringify(dllMainfest, null, 2);
             }
-          })
-        ]
+          }),
+        ],
       };
     },
     getEntryConfig: (o) => {
@@ -272,7 +272,7 @@ module.exports = function(options) {
     getPathConfig: () => {
       return {
         public: normalizedPublicPath,
-        port: config.dev.port
+        port: config.dev.port,
       };
     },
     getSassConfig: (o) => {
